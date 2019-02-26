@@ -21,7 +21,6 @@ const Header = styled.div`
   align-items: center;
   border-radius: 8px;
   font-size: 30px;
-  font-family: Times New Roman;
   text-shadow: 10px 10px 4px #ffffff;
   flex-grow: 0;
 `;

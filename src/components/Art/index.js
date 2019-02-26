@@ -32,6 +32,20 @@ const pulse = keyframes`
   }
 `;
 
+const shadowpulse = keyframes`
+  0% {
+    text-shadow: 200px 150px 140px #000000;
+    opacity: 0;
+    letter-spacing: 100px;
+  }
+
+  100% {
+    text-shadow: 100px 50px 40px #000000;
+    opacity: 1;
+    letter-spacing: 0px;
+  }
+`;
+
 const Stripe = styled.div`
   height: 100%;
   width: ${props => props.width}px;
@@ -54,10 +68,9 @@ const StripeContainer = styled.div`
 const LogoContainer = styled.div`
   font-size: 100px;
   color: white;
-  font-family: "Times New Roman", Times, serif;
-  animation: ${fadeIn} 6s;
-  padding-bottom: 100px;
+  animation: ${shadowpulse} 6s;
   text-shadow: 100px 50px 40px #000000;
+  padding-bottom: 100px;
 `;
 
 const Texture = styled.div`
