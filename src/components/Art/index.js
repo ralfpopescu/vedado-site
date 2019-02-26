@@ -46,6 +46,19 @@ const shadowpulse = keyframes`
   }
 `;
 
+const reload = keyframes`
+  0% {
+    text-shadow: 100px 100px 100px #000000;
+    opacity: 0;
+    transform: scale(2) rotate(720deg);
+  }
+
+  100% {
+    text-shadow: 10px 10px 10px #000000;
+    transform: scale(1) rotate(0);
+  }
+`;
+
 const Stripe = styled.div`
   height: 100%;
   width: ${props => props.width}px;
@@ -111,6 +124,24 @@ const ContentContainer = styled.div`
   align-items: center;
 `;
 
+const AbsoluteFill = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+`;
+
+const ReloadContainer = styled.div`
+  font-size: 100px;
+  position: absolute;
+  bottom: 0;
+  padding: 15px;
+  color: white;
+  text-shadow: 10px 10px 10px #000000;
+  animation: ${reload} 6s;
+`;
+
 const generateColors = (number, hue) => {
   return randomColor({
     count: number,
@@ -143,6 +174,9 @@ const Art = () => {
         <div style={{ marginLeft: "100px" }}>
           <Content />
         </div>
+        <AbsoluteFill>
+          <ReloadContainer>↻</ReloadContainer>
+        </AbsoluteFill>
       </ContentContainer>
     </StripeContainer>
   );
