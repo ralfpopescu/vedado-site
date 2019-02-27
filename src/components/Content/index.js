@@ -4,9 +4,9 @@ import { useTransition, animated } from "react-spring";
 import { songs } from "../songs";
 
 const Container = styled.div`
-  height: 500px;
+  height: 550px;
   background-color: rgb(0, 0, 0, 0.5);
-  width: 400px;
+  width: 450px;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -46,6 +46,7 @@ const ArrowLeft = styled.span`
   transform: rotate(-45deg);
   transform: rotate(45deg) scaleX(-1);
   cursor: pointer;
+  z-index: 1;
 `;
 
 const ArrowRight = styled.span`
@@ -57,6 +58,8 @@ const ArrowRight = styled.span`
   width: 10px;
   opacity: 0.8;
   transform: rotate(-45deg);
+  cursor: pointer;
+  z-index: 1;
 `;
 
 const PlayArrowLeft = styled.div`
@@ -123,6 +126,7 @@ const SongContainer = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+  z-index: 1;
 `;
 
 const changeSongs = (change, currentSongIndex) => {
@@ -135,7 +139,17 @@ const changeSongs = (change, currentSongIndex) => {
   return currentSongIndex + change;
 };
 
-const ContentPages = ["MUSIC", "TOUR"];
+const contentPages = ["MUSIC", "TOUR"];
+
+const changeContentPage = (change, currentPageIndex) => {
+  if (currentPageIndex === contentPages.length - 1 && change === 1) {
+    return 0;
+  }
+  if (currentPageIndex === 0 && change === -1) {
+    return contentPages.length - 1;
+  }
+  return currentPageIndex + change;
+};
 
 const fadeIn = keyframes`
   from {
@@ -147,20 +161,25 @@ const fadeIn = keyframes`
   }
 `;
 
-const IFrameWrapper = styled.div`
-  animation: ${fadeIn} 3s;
-`;
-
-const Wrapper = ({ children }) => {
-  const transitions = useTransition(children, null, {
-    from: { opacity: 0, transform: "translate3d(50%,0,0)" },
+const SlideAnimationWrapper = ({ children, k }) => {
+  const transitions = useTransition(children, () => k, {
+    from: { opacity: 0, transform: "translate3d(10%,0,0)" },
     enter: { opacity: 1, transform: "translate3d(0%,0,0)" },
-    leave: { opacity: 0, transform: "translate3d(-50%,0,0)" }
+    leave: { opacity: 0, transform: "translate3d(-10%,0,0)" }
   });
   return transitions.map(
     ({ item, key, props }) =>
       item && (
-        <animated.div key={key} style={props}>
+        <animated.div
+          key={key}
+          style={{
+            ...props,
+            display: "flex",
+            flexGrow: 1,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
           {item}
         </animated.div>
       )
@@ -175,24 +194,58 @@ const SongPlaceholder = styled.div`
 
 const Content = () => {
   const [songIndex, setSongIndex] = useState(0);
-  const [contentPage, setContentPage] = useState("MUSIC");
+  const [contentPageIndex, setContentPageIndex] = useState(0);
 
   return (
     <Container>
       <Header>
-        <ArrowLeft />
-        <div style={{ flexGrow: 1, textAlign: "center" }}>MUSIC</div>
-        <ArrowRight />
+        <ArrowLeft
+          onClick={() =>
+            setContentPageIndex(changeContentPage(-1, contentPageIndex))
+          }
+        />
+        <SlideAnimationWrapper key={contentPageIndex}>
+          <div style={{ flexGrow: 1, textAlign: "center" }}>
+            {contentPages[contentPageIndex]}
+          </div>
+        </SlideAnimationWrapper>
+        <ArrowRight
+          onClick={() =>
+            setContentPageIndex(changeContentPage(-1, contentPageIndex))
+          }
+        />
       </Header>
-      <SubContainer>
-        <PlayLeft onClick={() => setSongIndex(changeSongs(-1, songIndex))} />
-        <SongContainer>
-          <Wrapper key={songIndex}>
-            <SongPlaceholder>{songs[songIndex]()}</SongPlaceholder>
-          </Wrapper>
-        </SongContainer>
-        <PlayRight onClick={() => setSongIndex(changeSongs(1, songIndex))} />
-      </SubContainer>
+      {contentPages[contentPageIndex] === "MUSIC" && (
+        <SubContainer>
+          <PlayLeft onClick={() => setSongIndex(changeSongs(-1, songIndex))} />
+          <SongContainer key={songIndex}>
+            <SlideAnimationWrapper k={songIndex}>
+              <SongPlaceholder>{songs[songIndex]()}</SongPlaceholder>
+            </SlideAnimationWrapper>
+          </SongContainer>
+          <PlayRight onClick={() => setSongIndex(changeSongs(1, songIndex))} />
+        </SubContainer>
+      )}
+      {contentPages[contentPageIndex] === "TOUR" && (
+        <SlideAnimationWrapper key={contentPageIndex}>
+          <SubContainer>
+            <SongContainer>
+              <div
+                style={{
+                  color: "white",
+                  fontSize: "20px",
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex"
+                }}
+              >
+                No upcoming tour dates.
+              </div>
+            </SongContainer>
+          </SubContainer>
+        </SlideAnimationWrapper>
+      )}
     </Container>
   );
 };
