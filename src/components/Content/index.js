@@ -176,7 +176,6 @@ const SlideAnimationWrapper = ({ children, k }) => {
             ...props,
             display: "flex",
             flexGrow: 1,
-            alignItems: "center",
             justifyContent: "center"
           }}
         >

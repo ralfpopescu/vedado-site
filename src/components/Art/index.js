@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import randomColor from "randomcolor";
 import { textures } from "./Textures";
 import Content from "../Content";
+import Contact from "../Contact";
 
 const randomInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -54,7 +55,7 @@ const artgeneratorshadow = keyframes`
   }
 
   100% {
-    text-shadow: 10px 10px 10px #000000;
+    text-shadow: 5px 5px 10px #000000;
     opacity: 1;
     letter-spacing: 0px;
   }
@@ -70,33 +71,6 @@ const reload = keyframes`
   100% {
     text-shadow: 10px 10px 10px #000000;
     transform: scale(1) rotate(0);
-  }
-`;
-
-const glitch = keyframes`
-0% {
-  text-shadow: ${() => 10 * Math.random()}px ${() =>
-  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
-  }
-  20% {
-    text-shadow: ${() => 10 * Math.random()}px ${() =>
-  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
-  }
-  40% {
-    text-shadow: ${() => 10 * Math.random()}px ${() =>
-  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
-  }
-  60% {
-    text-shadow: ${() => 10 * Math.random()}px ${() =>
-  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
-  }
-  80% {
-    text-shadow: ${() => 10 * Math.random()}px ${() =>
-  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
-  }
-  100% {
-    text-shadow: ${() => 10 * Math.random()}px ${() =>
-  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
   }
 `;
 
@@ -122,9 +96,14 @@ const StripeContainer = styled.div`
 const LogoContainer = styled.div`
   font-size: 100px;
   color: white;
-  animation: ${shadowpulse} 6s;
+  animation: ${shadowpulse} 4s;
   text-shadow: 100px 50px 40px #000000;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
+`;
+
+const HeroContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Texture = styled.div`
@@ -134,7 +113,7 @@ const Texture = styled.div`
   right: 0;
   left: 0;
   ${props => props.texture};
-  animation: ${fadeIn} 6s;
+  animation: ${fadeIn} 4s;
   color: white;
 `;
 
@@ -180,7 +159,7 @@ const ReloadContainer = styled.div`
   padding: 15px;
   color: white;
   text-shadow: 10px 10px 10px #000000;
-  animation: ${reload} 6s;
+  animation: ${reload} 4s;
   cursor: pointer;
 `;
 
@@ -192,7 +171,7 @@ const ArtGeneratorContainer = styled.div`
   padding: 15px;
   color: white;
   text-shadow: 5px 5px 10px #000000;
-  animation: ${artgeneratorshadow} 6s;
+  animation: ${artgeneratorshadow} 4s;
 `;
 
 const generateColors = (number, hue) => {
@@ -222,7 +201,12 @@ const Art = () => {
             paddingBottom: "200px"
           }}
         >
-          <LogoContainer>VEDADO</LogoContainer>
+          <HeroContainer>
+            <LogoContainer>VEDADO</LogoContainer>
+            <div style={{ paddingLeft: "60px" }}>
+              <Contact />
+            </div>
+          </HeroContainer>
         </div>
         <div style={{ marginLeft: "100px" }}>
           <Content />
