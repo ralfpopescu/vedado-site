@@ -1,5 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import styled, { keyframes } from "styled-components";
+import { useTransition, animated } from "react-spring";
+import { songs } from "../songs";
 
 const Container = styled.div`
   height: 500px;
@@ -43,6 +45,7 @@ const ArrowLeft = styled.span`
   opacity: 0.8;
   transform: rotate(-45deg);
   transform: rotate(45deg) scaleX(-1);
+  cursor: pointer;
 `;
 
 const ArrowRight = styled.span`
@@ -56,7 +59,7 @@ const ArrowRight = styled.span`
   transform: rotate(-45deg);
 `;
 
-const PlayArrowLeft = styled.span`
+const PlayArrowLeft = styled.div`
   border-right: 8px solid white;
   border-bottom: 8px solid white;
   border-radius: 1px;
@@ -66,7 +69,7 @@ const PlayArrowLeft = styled.span`
   transform: rotate(45deg) scaleX(-1);
 `;
 
-const PlayArrowRight = styled.span`
+const PlayArrowRight = styled.div`
   border-right: 8px solid white;
   border-bottom: 8px solid white;
   border-radius: 1px;
@@ -76,36 +79,42 @@ const PlayArrowRight = styled.span`
   transform: rotate(-45deg);
 `;
 
-const PlayLeft = () => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "row",
-      height: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: "10px"
-    }}
-  >
-    <PlayArrowLeft />
-    <PlayArrowLeft />
-  </div>
+const PlayButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  z-index: 1;
+`;
+
+const PlayButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const PlayLeft = ({ onClick }) => (
+  <PlayButtonContainer>
+    <PlayButtonWrapper onClick={onClick}>
+      <PlayArrowLeft />
+      <PlayArrowLeft />
+    </PlayButtonWrapper>
+  </PlayButtonContainer>
 );
 
-const PlayRight = () => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "row",
-      height: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: "10px"
-    }}
-  >
-    <PlayArrowRight />
-    <PlayArrowRight />
-  </div>
+const PlayRight = ({ onClick }) => (
+  <PlayButtonContainer>
+    <PlayButtonWrapper onClick={onClick}>
+      <PlayArrowRight />
+      <PlayArrowRight />
+    </PlayButtonWrapper>
+  </PlayButtonContainer>
 );
 
 const SongContainer = styled.div`
@@ -116,28 +125,76 @@ const SongContainer = styled.div`
   width: 100%;
 `;
 
-const Content = () => (
-  <Container>
-    <Header>
-      <ArrowLeft />
-      <div style={{ flexGrow: 1, textAlign: "center" }}>MUSIC</div>
-      <ArrowRight />
-    </Header>
-    <SubContainer>
-      <PlayLeft />
-      <SongContainer>
-        <iframe
-          src="https://open.spotify.com/embed/track/4hvmK2HZPB2MwKjWprYCxg"
-          width="270"
-          height="300"
-          frameborder="0"
-          allowtransparency="true"
-          allow="encrypted-media"
-        />
-      </SongContainer>
-      <PlayRight />
-    </SubContainer>
-  </Container>
-);
+const changeSongs = (change, currentSongIndex) => {
+  if (currentSongIndex === songs.length - 1 && change === 1) {
+    return 0;
+  }
+  if (currentSongIndex === 0 && change === -1) {
+    return songs.length - 1;
+  }
+  return currentSongIndex + change;
+};
+
+const ContentPages = ["MUSIC", "TOUR"];
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+const IFrameWrapper = styled.div`
+  animation: ${fadeIn} 3s;
+`;
+
+const Wrapper = ({ children }) => {
+  const transitions = useTransition(children, null, {
+    from: { opacity: 0, transform: "translate3d(50%,0,0)" },
+    enter: { opacity: 1, transform: "translate3d(0%,0,0)" },
+    leave: { opacity: 0, transform: "translate3d(-50%,0,0)" }
+  });
+  return transitions.map(
+    ({ item, key, props }) =>
+      item && (
+        <animated.div key={key} style={props}>
+          {item}
+        </animated.div>
+      )
+  );
+};
+
+const SongPlaceholder = styled.div`
+  height: 380px;
+  width: 300px;
+  background-color: rgb(255, 255, 255, 0.2);
+`;
+
+const Content = () => {
+  const [songIndex, setSongIndex] = useState(0);
+  const [contentPage, setContentPage] = useState("MUSIC");
+
+  return (
+    <Container>
+      <Header>
+        <ArrowLeft />
+        <div style={{ flexGrow: 1, textAlign: "center" }}>MUSIC</div>
+        <ArrowRight />
+      </Header>
+      <SubContainer>
+        <PlayLeft onClick={() => setSongIndex(changeSongs(-1, songIndex))} />
+        <SongContainer>
+          <Wrapper key={songIndex}>
+            <SongPlaceholder>{songs[songIndex]()}</SongPlaceholder>
+          </Wrapper>
+        </SongContainer>
+        <PlayRight onClick={() => setSongIndex(changeSongs(1, songIndex))} />
+      </SubContainer>
+    </Container>
+  );
+};
 
 export default Content;

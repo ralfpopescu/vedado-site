@@ -46,6 +46,20 @@ const shadowpulse = keyframes`
   }
 `;
 
+const artgeneratorshadow = keyframes`
+  0% {
+    text-shadow: 100px 100px 100px #000000;
+    opacity: 0;
+    letter-spacing: 100px;
+  }
+
+  100% {
+    text-shadow: 10px 10px 10px #000000;
+    opacity: 1;
+    letter-spacing: 0px;
+  }
+`;
+
 const reload = keyframes`
   0% {
     text-shadow: 100px 100px 100px #000000;
@@ -56,6 +70,33 @@ const reload = keyframes`
   100% {
     text-shadow: 10px 10px 10px #000000;
     transform: scale(1) rotate(0);
+  }
+`;
+
+const glitch = keyframes`
+0% {
+  text-shadow: ${() => 10 * Math.random()}px ${() =>
+  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
+  }
+  20% {
+    text-shadow: ${() => 10 * Math.random()}px ${() =>
+  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
+  }
+  40% {
+    text-shadow: ${() => 10 * Math.random()}px ${() =>
+  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
+  }
+  60% {
+    text-shadow: ${() => 10 * Math.random()}px ${() =>
+  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
+  }
+  80% {
+    text-shadow: ${() => 10 * Math.random()}px ${() =>
+  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
+  }
+  100% {
+    text-shadow: ${() => 10 * Math.random()}px ${() =>
+  10 * Math.random()}px ${() => 10 * Math.random()}px #000000;
   }
 `;
 
@@ -140,6 +181,18 @@ const ReloadContainer = styled.div`
   color: white;
   text-shadow: 10px 10px 10px #000000;
   animation: ${reload} 6s;
+  cursor: pointer;
+`;
+
+const ArtGeneratorContainer = styled.div`
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px;
+  color: white;
+  text-shadow: 5px 5px 10px #000000;
+  animation: ${artgeneratorshadow} 6s;
 `;
 
 const generateColors = (number, hue) => {
@@ -175,7 +228,10 @@ const Art = () => {
           <Content />
         </div>
         <AbsoluteFill>
-          <ReloadContainer>↻</ReloadContainer>
+          <ReloadContainer onClick={() => window.location.reload()}>
+            ↻
+          </ReloadContainer>
+          <ArtGeneratorContainer>ART GENERATOR</ArtGeneratorContainer>
         </AbsoluteFill>
       </ContentContainer>
     </StripeContainer>

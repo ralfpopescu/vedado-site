@@ -13,15 +13,14 @@ class App extends Component {
           <meta name="description" content="The HTML5 Herald" />
           <meta name="author" content="SitePoint" />
           <link
-            href="https://fonts.googleapis.com/css?family=Pragati Narrow"
+            href="https://fonts.googleapis.com/css?family=Unica One"
             rel="stylesheet"
           />
         </head>
         <body>
           <div
             style={{
-              fontFamily: `Pragati Narrow`,
-              letterSpacing: "-2px"
+              fontFamily: `Unica One`
             }}
           >
             <Art />
