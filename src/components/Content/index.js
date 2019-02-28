@@ -23,7 +23,7 @@ const Header = styled.div`
   align-items: center;
   border-radius: 8px;
   font-size: 30px;
-  text-shadow: 10px 10px 4px #ffffff;
+  text-shadow: 10px 10px 4px #000000;
   flex-grow: 0;
 `;
 
@@ -139,18 +139,6 @@ const changeSongs = (change, currentSongIndex) => {
   return currentSongIndex + change;
 };
 
-const contentPages = ["MUSIC", "TOUR"];
-
-const changeContentPage = (change, currentPageIndex) => {
-  if (currentPageIndex === contentPages.length - 1 && change === 1) {
-    return 0;
-  }
-  if (currentPageIndex === 0 && change === -1) {
-    return contentPages.length - 1;
-  }
-  return currentPageIndex + change;
-};
-
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -191,6 +179,18 @@ const SongPlaceholder = styled.div`
   background-color: rgb(255, 255, 255, 0.2);
 `;
 
+const contentPages = ["ABOUT", "MUSIC", "TOUR"];
+
+const changeContentPage = (change, currentPageIndex) => {
+  if (currentPageIndex === contentPages.length - 1 && change === 1) {
+    return 0;
+  }
+  if (currentPageIndex === 0 && change === -1) {
+    return contentPages.length - 1;
+  }
+  return currentPageIndex + change;
+};
+
 const Content = () => {
   const [songIndex, setSongIndex] = useState(0);
   const [contentPageIndex, setContentPageIndex] = useState(0);
@@ -214,6 +214,29 @@ const Content = () => {
           }
         />
       </Header>
+      {contentPages[contentPageIndex] === "ABOUT" && (
+        <SlideAnimationWrapper key={contentPageIndex}>
+          <SubContainer>
+            <SongContainer>
+              <div
+                style={{
+                  color: "white",
+                  fontSize: "20px",
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                  padding: "32px"
+                }}
+              >
+                Vedado is Matt Petters and Ralf Popescu from Atlanta, Georgia.
+                They are roommates on their home street of Vedado Way, where a
+                couple times a week they'll buy a six pack and write a song.
+              </div>
+            </SongContainer>
+          </SubContainer>
+        </SlideAnimationWrapper>
+      )}
       {contentPages[contentPageIndex] === "MUSIC" && (
         <SubContainer>
           <PlayLeft onClick={() => setSongIndex(changeSongs(-1, songIndex))} />
