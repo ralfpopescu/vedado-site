@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "63dfa2cf0ef0ed187c9e",
+    "revision": "f66a8cdf0b32c70563ac",
     "url": "/vedado-site/static/css/main.8adee0bd.chunk.css"
   },
   {
-    "revision": "63dfa2cf0ef0ed187c9e",
-    "url": "/vedado-site/static/js/main.63dfa2cf.chunk.js"
+    "revision": "f66a8cdf0b32c70563ac",
+    "url": "/vedado-site/static/js/main.f66a8cdf.chunk.js"
   },
   {
     "revision": "bd1f966e6d2065c88129",
@@ -36,7 +36,7 @@ self.__precacheManifest = [
     "url": "/vedado-site/static/media/facebook.d1ac3589.svg"
   },
   {
-    "revision": "097444fe889391cba8cf0d2ee0c5ce8f",
+    "revision": "4d0567ffacb7108b7c54a69b7f58961e",
     "url": "/vedado-site/index.html"
   }
 ];
