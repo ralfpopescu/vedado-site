@@ -5,6 +5,7 @@ import { ReactComponent as Instagram } from "../Icons/instagram.svg";
 import { ReactComponent as SoundCloud } from "../Icons/soundcloud.svg";
 import { ReactComponent as Spotify } from "../Icons/spotify.svg";
 import { ReactComponent as Facebook } from "../Icons/facebook.svg";
+import * as Constants from "../../util/Constants";
 
 const Container = styled.div`
   display: flex;
@@ -30,16 +31,16 @@ const IconContainer = styled.a`
 
 const Contact = () => (
   <Container>
-    <IconContainer href="https://www.instagram.com/vedado.life/">
+    <IconContainer href={Constants.IG_URL}>
       <Instagram />
     </IconContainer>
-    <IconContainer href="https://twitter.com/vedadolife">
+    <IconContainer href={Constants.TWITTER_URL}>
       <Twitter />
     </IconContainer>
-    <IconContainer href="https://www.facebook.com/vedado.life/">
+    <IconContainer href={Constants.FB_URL}>
       <Facebook />
     </IconContainer>
-    <IconContainer>
+    <IconContainer href={Constants.SOUNDCLOUD_URL}>
       <SoundCloud />
     </IconContainer>
     <IconContainer>
