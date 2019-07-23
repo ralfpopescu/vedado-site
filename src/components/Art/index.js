@@ -4,6 +4,7 @@ import randomColor from "randomcolor";
 import { textures } from "./Textures";
 import Content from "../Content";
 import Contact from "../Contact";
+import MediaQuery from "react-responsive";
 
 const randomInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -191,33 +192,44 @@ const Art = () => {
       {console.log(textures[randomInteger(1, 87)])}
       <Texture texture={textures[randomInteger(1, textures.length)].value} />
       <Gradient />
+    <MediaQuery minDeviceWidth={1224} device={{ deviceWidth: 1600 }}>
+      {/*DESKTOP MODE*/}
+          <ContentContainer>
+            <div
+              style={{
+                marginRight: "100px",
+                height: "100px",
+                position: "relative",
+                display: "flex",
+                paddingBottom: "200px"
+              }}
+            >
+              <HeroContainer>
+                <LogoContainer>VEDADO</LogoContainer>
+                <div style={{ paddingLeft: "60px" }}>
+                  <Contact />
+                </div>
+              </HeroContainer>
+            </div>
+            <AbsoluteFill>
+              <ReloadContainer onClick={() => window.location.reload()}>
+                ↻
+              </ReloadContainer>
+              <ArtGeneratorContainer>ART GENERATOR</ArtGeneratorContainer>
+            </AbsoluteFill>
+          </ContentContainer>
+      </MediaQuery>
+      <MediaQuery maxDeviceWidth={1223} >
+        {/*MOBILE MODE*/}
       <ContentContainer>
-        <div
-          style={{
-            marginRight: "100px",
-            height: "100px",
-            position: "relative",
-            display: "flex",
-            paddingBottom: "200px"
-          }}
-        >
-          <HeroContainer>
-            <LogoContainer>VEDADO</LogoContainer>
-            <div style={{ paddingLeft: "60px" }}>
+        <HeroContainer>
+        <LogoContainer>VEDADO</LogoContainer>
+            <div style = {{ paddingLeft: "60px" }}>
               <Contact />
             </div>
-          </HeroContainer>
-        </div>
-        <div style={{ marginLeft: "100px" }}>
-          <Content />
-        </div>
-        <AbsoluteFill>
-          <ReloadContainer onClick={() => window.location.reload()}>
-            ↻
-          </ReloadContainer>
-          <ArtGeneratorContainer>ART GENERATOR</ArtGeneratorContainer>
-        </AbsoluteFill>
+      </HeroContainer>
       </ContentContainer>
+      </MediaQuery>
     </StripeContainer>
   );
 };
