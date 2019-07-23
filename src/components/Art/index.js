@@ -184,6 +184,7 @@ const generateColors = (number, hue) => {
 };
 
 const Art = () => {
+
   return (
     <StripeContainer width="100%" height="100%">
       {generateColors(15, "random").map(color => (
@@ -211,6 +212,9 @@ const Art = () => {
                 </div>
               </HeroContainer>
             </div>
+      <div style={{ marginLeft: "100px" }}>
+          <Content />
+        </div>
             <AbsoluteFill>
               <ReloadContainer onClick={() => window.location.reload()}>
                 ↻
@@ -219,7 +223,7 @@ const Art = () => {
             </AbsoluteFill>
           </ContentContainer>
       </MediaQuery>
-      <MediaQuery maxDeviceWidth={1223} >
+      <MediaQuery maxDeviceWidth={1224} >
         {/*MOBILE MODE*/}
       <ContentContainer>
         <HeroContainer>
@@ -228,6 +232,11 @@ const Art = () => {
               <Contact />
             </div>
       </HeroContainer>
+            <AbsoluteFill>
+              <ReloadContainer onClick={() => window.location.reload()}>
+                ↻
+              </ReloadContainer>
+            </AbsoluteFill>
       </ContentContainer>
       </MediaQuery>
     </StripeContainer>
