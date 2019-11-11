@@ -4,6 +4,7 @@ import randomColor from "randomcolor";
 import { textures } from "./Textures";
 import Content from "../Content";
 import Contact from "../Contact";
+import MediaQuery from "react-responsive";
 
 const randomInteger = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -183,6 +184,7 @@ const generateColors = (number, hue) => {
 };
 
 const Art = () => {
+
   return (
     <StripeContainer width="100%" height="100%">
       {generateColors(15, "random").map(color => (
@@ -191,33 +193,52 @@ const Art = () => {
       {console.log(textures[randomInteger(1, 87)])}
       <Texture texture={textures[randomInteger(1, textures.length)].value} />
       <Gradient />
-      <ContentContainer>
-        <div
-          style={{
-            marginRight: "100px",
-            height: "100px",
-            position: "relative",
-            display: "flex",
-            paddingBottom: "200px"
-          }}
-        >
-          <HeroContainer>
-            <LogoContainer>VEDADO</LogoContainer>
-            <div style={{ paddingLeft: "60px" }}>
-              <Contact />
+    <MediaQuery minDeviceWidth={1224} device={{ deviceWidth: 1600 }}>
+      {/*DESKTOP MODE*/}
+          <ContentContainer>
+            <div
+              style={{
+                marginRight: "100px",
+                height: "100px",
+                position: "relative",
+                display: "flex",
+                paddingBottom: "200px"
+              }}
+            >
+              <HeroContainer>
+                <LogoContainer>VEDADO</LogoContainer>
+                <div style={{ paddingLeft: "60px" }}>
+                  <Contact />
+                </div>
+              </HeroContainer>
             </div>
-          </HeroContainer>
-        </div>
-        <div style={{ marginLeft: "100px" }}>
+      <div style={{ marginLeft: "100px" }}>
           <Content />
         </div>
-        <AbsoluteFill>
-          <ReloadContainer onClick={() => window.location.reload()}>
-            ↻
-          </ReloadContainer>
-          <ArtGeneratorContainer>ART GENERATOR</ArtGeneratorContainer>
-        </AbsoluteFill>
+            <AbsoluteFill>
+              <ReloadContainer onClick={() => window.location.reload()}>
+                ↻
+              </ReloadContainer>
+              <ArtGeneratorContainer>ART GENERATOR</ArtGeneratorContainer>
+            </AbsoluteFill>
+          </ContentContainer>
+      </MediaQuery>
+      <MediaQuery maxDeviceWidth={1224} >
+        {/*MOBILE MODE*/}
+      <ContentContainer>
+        <HeroContainer>
+        <LogoContainer>VEDADO</LogoContainer>
+            <div style = {{ paddingLeft: "60px" }}>
+              <Contact />
+            </div>
+      </HeroContainer>
+            <AbsoluteFill>
+              <ReloadContainer onClick={() => window.location.reload()}>
+                ↻
+              </ReloadContainer>
+            </AbsoluteFill>
       </ContentContainer>
+      </MediaQuery>
     </StripeContainer>
   );
 };
